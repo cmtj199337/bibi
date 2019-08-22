@@ -4,19 +4,15 @@ var router = express.Router();
 var mongoose = require('mongoose')
 var Goods = require('../models/goods')
 
-mongoose.connect('mongodb://127.0.0.1:27017/dumall')
-
-mongoose.connection.on('connected', () => {
-  console.log('Success ')
+var url = 'mongodb://127.0.0.1:27017/dumall'
+mongoose.connect(url, { useNewUrlParser: true }, (err, db) => {
+  if(err) {
+    console.log('Connection Error:' + err)
+  }else {
+    console.log('Connection Success')
+  }
 })
 
-mongoose.connection.on('error', () => {
-  console.log('default ')
-})
-
-mongoose.connection.on('disconnected', () => {
-  console.log('disconnected ')
-})
 router.get('/', function(req, res, next) {
   res.send('shop list~~')
 });
