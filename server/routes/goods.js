@@ -12,9 +12,24 @@ mongoose.connect(url, { useNewUrlParser: true }, (err, db) => {
     console.log('Connection Success')
   }
 })
-
 router.get('/', function(req, res, next) {
-  res.send('shop list~~')
+  Goods.find({}, function(err, doc) {
+    if (err) {
+      res.json({
+        status: '1',
+        msg: err.message
+      })
+    } else {
+      res.json({
+        status: '0',
+        msg: '',
+        result: {
+          count: doc.length,
+          list: doc
+        }
+      })
+    }
+  })
 });
 
 module.exports = router
